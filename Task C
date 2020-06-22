@@ -1,0 +1,43 @@
+.data
+prompt: .asciiz "Please enter the your three digit number: "
+message: .asciiz "Your three digit number doubled is : "
+.text
+main:
+
+#prompt the user to enter number
+    li $v0,4
+    la $a0, prompt #Load the prompt message in $a0
+    syscall #Calls the above code to be carried out
+    
+    
+    #get uset input //Reading Integer
+    li $v0,5
+    syscall
+    
+    #store result in $t0
+    move $t0,$v0
+    
+    addi $t4,$zero,9 #display 9 loops as one will already be displayed
+    loop: #initalise the loop
+    addi $t4,$t4,-1 # take 1 off the loop
+    #print or display number
+    li $t0,1 #display the divided number 
+    #syscall #system call displays divided result
+    bgez $t4,loop #branch loop if greater than 1 or equal to 0
+    
+    
+    
+    #double result in $t0
+    add $t0,$t0,$t0
+    
+    #display message
+    li $v0,4
+    la $a0,message
+    syscall
+    
+    #print or display number
+    li $v0,1
+    move $a0,$t0
+    syscall
+    
+    li $v0,10 #Makes the program exit the function main
